@@ -87,12 +87,11 @@ router.post("/registro",(req,res,next)=>{
 // POST iniciar sesión
 
 router.post("/ingresa",(req,res,next)=>{
-    
+
     console.log('SESSION =====> ', req.session);
 
     const {email, password} = req.body;
-console.log(req.body)
-
+        
     if (email==="" || password==="") {
         res.render('index',{
             errorMessage:"Ingresa un correo electrónico y una contraseña"
@@ -128,8 +127,13 @@ console.log(req.body)
 // GET para mostrar vista de la ruta /perfil
 
 router.get('/perfil',(req,res)=>{
-    res.render('perfil')
-})
+    console.log({
+        userInSession: req.session.currentUser
+    })
+    res.render('perfil',{
+        userInSession: req.session.currentUser
+    });
+});
 
 
 module.exports = router

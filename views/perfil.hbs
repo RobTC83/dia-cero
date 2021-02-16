@@ -1,1 +1,13 @@
-Este es el perfil
+
+{{#if userInSession}}
+<h2>Bienvenido,{{userInSession.email}}!</h2>
+
+<p>Esta es tu página de perfil</p>
+
+<button>
+    <a href="/perfil">Refrescar la página</a>
+  </button>
+
+  {{else}}
+  <p>Inicia sesión <a href="/">aquí</a></p>
+{{/if}}
