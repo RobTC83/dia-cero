@@ -16,13 +16,13 @@ router.get("/",(req,res,next)=>{
     res.render("index")  
 })
 
-// GET Mostrar registro en ruta /ingresa
+// GET Mostrar INICIAR SESION en ruta /ingresa
 
 router.get("/ingresa",(req,res,next)=>{
     res.render("index")
 })
 
-// GET Mostrar formulario para crear cuenta
+// GET Mostrar FORMULARIO para crear cuenta
 
 router.get("/registro",(req,res,next)=>{
     res.render("registro")
@@ -64,7 +64,7 @@ router.post("/registro",(req,res,next)=>{
 
     .then((newUser)=>{
         console.log('Nuevo registro',newUser)
-        res.redirect("/ingresa")
+        res.redirect("/perfil")
     })
     //MANEJO DE ERRORES 
     .catch((error) => {
@@ -84,7 +84,52 @@ router.post("/registro",(req,res,next)=>{
     })
 })
 
-// GET registro
+// POST iniciar sesión
+
+router.post("/ingresa",(req,res,next)=>{
+    
+    console.log('SESSION =====> ', req.session);
+
+    const {email, password} = req.body;
+console.log(req.body)
+
+    if (email==="" || password==="") {
+        res.render('index',{
+            errorMessage:"Ingresa un correo electrónico y una contraseña"
+        });
+        return;
+    }
+    
+    Users.findOne({email})
+    .then(userFound => {
+        if (!userFound) {
+            res.render('index',{
+                errorMessage: "El correo no está registrado."
+            });
+            return;
+        } 
+        else if (bcrypt.compareSync
+            (password, userFound.passwordHash)
+            ) {
+            req.session.currentUser = userFound;
+            
+            res.redirect('/perfil');
+
+        } else {
+            res.render('ingresa',{
+                errorMessage:
+                "Contraseña inválida"});
+        }
+    })
+    .catch((error)=> next(error))
+
+});
+
+// GET para mostrar vista de la ruta /perfil
+
+router.get('/perfil',(req,res)=>{
+    res.render('perfil')
+})
 
 
 module.exports = router
