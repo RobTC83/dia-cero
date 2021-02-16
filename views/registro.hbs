@@ -1,25 +1,46 @@
-<h1>Regístrate</h1>
+<h1 class="display-6">Regístrate</h1>
+
+
 <p>¿Ya tienes cuenta? Inicia sesión <a href="/">aquí</a></p>
 
 </br>
 <form action="/registro" method="POST">
         
-        <label for="input-username">Usuario: </label>
-        <input type="username" name="username" placeholder="tu usuario"/></br>
+          <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">#</span>
+        <input type="username" name="username" class="form-control" placeholder="tu usuario" aria-label="email" aria-describedby="basic-addon1">
+        </div>
 
-        <label for="input-email">Correo electrónico: </label>
-        <input type="email" name="email" placeholder="tu correo"/></br>
+        {{!-- <label for="input-username">Usuario: </label>
+        <input type="username" name="username" placeholder="tu usuario"/></br> --}}
 
-        <label for="input-password">Contraseña: </label>
-        <input type="password" name="password" id="input-password" placeholder="***"/></br>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">@</span>
+            <input type="email" name="email" class="form-control" placeholder="tu correo" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
 
-        <button type="submit">Crear cuenta</button>
+        {{!-- <label for="input-email">Correo electrónico: </label>
+        <input type="email" name="email" placeholder="tu correo"/></br> --}}
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">***</span>
+            <input type="password" name="password" class="form-control" placeholder="tu contraseña" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+
+        {{!-- <label for="input-password">Contraseña: </label>
+        <input type="password" name="password" id="input-password" placeholder="***"/></br> --}}
+
+        <button type="submit" class="btn btn-primary">Regístrate</button>
+
+        {{!-- <button type="submit">Crear cuenta</button> --}}
 
     </form>
 
-
+</br>
      {{#if errorMessage}}
-    <p class="error">{{errorMessage}}</p>
-  {{/if}}
+    <div class="alert alert-warning" role="alert">
+    {{errorMessage}}
+    </div>
+    {{/if}}
 
 

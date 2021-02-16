@@ -63,8 +63,7 @@ router.post("/registro",(req,res,next)=>{
    })
 
     .then((newUser)=>{
-        console.log('Nuevo registro',newUser)
-        res.redirect("/perfil")
+        res.render("welcome")
     })
     //MANEJO DE ERRORES 
     .catch((error) => {
@@ -115,7 +114,7 @@ router.post("/ingresa",(req,res,next)=>{
             res.redirect('/perfil');
 
         } else {
-            res.render('ingresa',{
+            res.render('index',{
                 errorMessage:
                 "Contraseña incorrecta"});
         }
@@ -127,12 +126,20 @@ router.post("/ingresa",(req,res,next)=>{
 // GET para mostrar vista de la ruta /perfil
 
 router.get('/perfil',(req,res)=>{
-    console.log("esto estoy mandando a la vista",{
-        userInSession: req.session.currentUser
-    })
+    // console.log("esto estoy mandando a la vista",{
+    //     userInSession: req.session.currentUser
+    // })
     res.render('perfil',{
         userInSession: req.session.currentUser
     });
+});
+
+// POST para cerrar sesión
+
+router.post('/cerrar',(req,res)=>{
+    req.session.destroy;
+    console.log("sesión x destruir",req.session.destroy())
+    res.redirect('/');
 });
 
 

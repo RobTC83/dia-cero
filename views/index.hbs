@@ -1,21 +1,36 @@
-<h1>Iniciar sesión</h1>
+<h1 class="display-6">Iniciar sesión</h1>
 
 
 <form action="/ingresa" method="POST">
         
-        <label for="input-email">Correo electrónico: </label>
-        <input type="email" name="email" placeholder="tu correo electrónico"/></br>
+        <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">@</span>
+        <input type="email" name="email" class="form-control" placeholder="tu correo electrónico" aria-label="email" aria-describedby="basic-addon1">
+        </div>
 
-        <label for="input-password">Contraseña: </label>
-        <input type="password" name="password" id="input-password" placeholder="***"/></br>
 
-        <button type="submit">Iniciar sesión</button>
+        {{!-- <label for="input-email">Correo electrónico: </label>
+        <input type="email" name="email" placeholder="tu correo electrónico"/></br> --}}
+
+        <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">***</span>
+        <input type="password" name="password" class="form-control" placeholder="tu contraseña" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+
+        {{!-- <label for="input-password">Contraseña: </label>
+        <input type="password" name="password" id="input-password" placeholder="Tu contraseña"/></br> --}}
+
+        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+
+        {{!-- <button type="submit">Iniciar sesión</button> </br> --}}
 
     </form>
-
+</br>
 
      {{#if errorMessage}}
-    <p class="error">{{errorMessage}}</p>
-  {{/if}}
+    <div class="alert alert-warning" role="alert">
+    {{errorMessage}}
+    </div>  
+    {{/if}}
 
 <p>¿No eres usuario aún? Regístrate <a href="/registro">aquí</a></p>

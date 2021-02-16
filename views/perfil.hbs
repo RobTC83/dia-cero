@@ -1,13 +1,26 @@
 
+
+
+<ul class="nav justify-content-end">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="/perfil">Refrescar la página</a>
+  </li>
+  <li class="nav-item">
+    <form  action="/editar" method="POST">
+    <a class="nav-link">Editar perfil</a>
+    </form>
+  </li>
+</ul>
+
 {{#if userInSession}}
-<h2>Bienvenido, {{userInSession.username}}!</h2>
+<h2>{{userInSession.username}}, este es tu perfil</h2>
 
-<p>Esta es tu página de perfil</p>
-
-<button>
-    <a href="/perfil">Refrescar la página</a>
-  </button>
+{{!-- <div class="d-grid gap-2 col-6">
+    <button type="submit" class="btn btn-secondary btn-sm"" href="/perfil">Refrescar la página</button>
+        <button class="btn btn-secondary btn-sm" type="button">Editar perfil</button>
+    </form>
+</div> --}}
 
   {{else}}
-  <p>Inicia sesión <a href="/">aquí</a></p>
+  {{!-- <p>Inicia sesión <a href="/">aquí</a></p> --}}
 {{/if}}
