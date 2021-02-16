@@ -31,11 +31,11 @@ router.get("/registro",(req,res,next)=>{
 // POST Creación de cuenta
 
 router.post("/registro",(req,res,next)=>{
-    const {email, password} = req.body
+    const {username, email, password} = req.body
 
 
-    if (!email || !password) {
-        res.render('registro', { errorMessage: 'No te olvides de llenar ambos campos' });
+    if (!username || !email || !password) {
+        res.render('registro', { errorMessage: 'No te olvides de llenar los tres campos' });
         return;}
 
         //VALIDACIÓN de la estructura del password
@@ -59,7 +59,7 @@ router.post("/registro",(req,res,next)=>{
         bcrypt.hash(password,salt)
    .then((passwordHash)=>{
        
-       return Users.create({email, passwordHash})
+       return Users.create({username, email, passwordHash})
    })
 
     .then((newUser)=>{
@@ -92,9 +92,9 @@ router.post("/ingresa",(req,res,next)=>{
 
     const {email, password} = req.body;
         
-    if (email==="" || password==="") {
+    if (!email || !password) {
         res.render('index',{
-            errorMessage:"Ingresa un correo electrónico y una contraseña"
+            errorMessage:"Los dos campos son requeridos"
         });
         return;
     }
@@ -117,7 +117,7 @@ router.post("/ingresa",(req,res,next)=>{
         } else {
             res.render('ingresa',{
                 errorMessage:
-                "Contraseña inválida"});
+                "Contraseña incorrecta"});
         }
     })
     .catch((error)=> next(error))
@@ -127,7 +127,7 @@ router.post("/ingresa",(req,res,next)=>{
 // GET para mostrar vista de la ruta /perfil
 
 router.get('/perfil',(req,res)=>{
-    console.log({
+    console.log("esto estoy mandando a la vista",{
         userInSession: req.session.currentUser
     })
     res.render('perfil',{

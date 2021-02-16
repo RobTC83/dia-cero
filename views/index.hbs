@@ -4,7 +4,7 @@
 <form action="/ingresa" method="POST">
         
         <label for="input-email">Correo electrónico: </label>
-        <input type="email" name="email" placeholder="tu correo"/></br>
+        <input type="email" name="email" placeholder="tu correo electrónico"/></br>
 
         <label for="input-password">Contraseña: </label>
         <input type="password" name="password" id="input-password" placeholder="***"/></br>
@@ -17,5 +17,5 @@
      {{#if errorMessage}}
     <p class="error">{{errorMessage}}</p>
   {{/if}}
-  
+
 <p>¿No eres usuario aún? Regístrate <a href="/registro">aquí</a></p>

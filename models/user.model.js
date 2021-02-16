@@ -3,6 +3,12 @@ const model = mongoose.model
 const Schema = mongoose.Schema
 
 const UserSchema = new Schema ({
+        username: {
+            type: String,
+            trim: true,
+            required: [true, 'El nombre de usuario es requerido.'],
+            unique: true
+          },
         email: {
             type: String,
             required: [true, 'Para crear tu cuenta introduce tu dirección de correo electrónico'],
