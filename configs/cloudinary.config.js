@@ -1,4 +1,4 @@
-const cloudinary = require("cloudinary")
+const cloudinary = require("cloudinary").v2
 const {CloudinaryStorage} = require('multer-storage-cloudinary')
 const multer = require('multer')
 
@@ -12,12 +12,11 @@ const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     folder: "profilePictures",
     allowedFormats: ["jpg","png"],
-    params: {
-        resource_type:"raw",
-        filename: function(req,file,cb){
+    params: {resource_type:"raw"},
+    filename: function(req,file,cb){
             cb(null,file.originalname)
         },
-    }
+    
 })
 
 module.exports = multer({storage})

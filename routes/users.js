@@ -131,9 +131,13 @@ router.get('/perfil',(req,res)=>{
     // console.log("esto estoy mandando a la vista",{
     //     userInSession: req.session.currentUser
     // })
-    res.render('perfil',{
-        userInSession: req.session.currentUser
-    });
+    const id = req.session.currentUser._id
+
+    Users.findById(id)
+    .then((userFound)=>{
+
+        res.render('perfil',{userInSession: userFound})
+    })
 });
 
 // POST para cerrar sesión
@@ -144,13 +148,41 @@ router.post('/cerrar',(req,res)=>{
     res.redirect('/');
 });
 
-// RUTA para subir las fotos de perfil /editar/subirfoto
-router.post('editar/subirfoto', uploadCloud.single("fotoPerfil"),(req,res,next)=>{
+// GET editar perfil
+
+router.get('/perfil/editar',(req,res)=>{
+    res.render("editarperfil",{
+        userInSession: req.session.currentUser
+    })
+})
+
+// POST editar perfil
+
+router.post('/perfil/editar',uploadCloud.single("fotoPerfil"),(req,res)=>{
+    
+    console.log(req.file)
+    const urlImage = req.file.path 
+    console.log("esto es el req.session",req.session.currentUser)
+    const id =req.session.currentUser._id    
+
+    Users.findByIdAndUpdate(id,{$set:{profilePictureUrl:urlImage}},{new:true})
+    .then((userFound)=>{
+        console.log(userFound)
+        res.redirect("/perfil")
+    }
+    )
+})
+
+// RUTA para actualizar foto de perfil /editar/subirfoto
+router.post('/perfil/:idUser/editar', uploadCloud.single("fotoPerfil"),(req,res,next)=>{
+    const id = req.params.idUser
+
     const {name} = req.body
     console.log(req.file)
     const urlImage = req.file.path
 
-    const profilePicture = URLSearchParams.create({profilePictureUrl})
+    Users.findByIdAndUpdate
+    // const profilePicture = URLSearchParams.create({profilePictureUrl})
 })
 
 
