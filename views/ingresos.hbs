@@ -1,0 +1,22 @@
+<ul class="nav justify-content-end">
+
+  <li class="nav-item">
+    <a class="nav-link" href="/perfil">Regresar</a>
+  </li>
+</ul>
+
+<h2>Ingresos</h2>
+{{#if userInSession}}
+</br>
+<h2>{{userInSession.username}}, estos son tus ingresos</h2>
+{{/if}}
+
+</br>
+{{#each incomeFound}}
+
+<p>En {{this.date}}</p>
+<p>Recibirás $ {{this.amount}}</p>
+<p>de {{this.incomeSource}}</p>
+<hr>
+
+{{/each}}

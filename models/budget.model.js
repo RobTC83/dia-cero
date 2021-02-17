@@ -1,16 +1,13 @@
-// const mongoose = require("mongoose")
-// const model = mongoose.model
-// const Schema = mongoose.Schema
+const mongoose = require("mongoose")
+const model = mongoose.model
+const Schema = mongoose.Schema
 
-// const BudgetSchema = new Schema ({
+const budgetSchema = new Schema (
+    {
+        concept: String,
+        quantity: Number,
+})
 
+const Budget = model("Budget", budgetSchema);
 
-// })
-       
-      
-
-
-
-
-// const Users = model("Budget",UserSchema);
-// module.exports = Budget;
+module.exports = Budget

@@ -8,7 +8,9 @@ const Users = require("../models/user.model.js")
 const uploadCloud = require("../configs/cloudinary.config.js")
 
 const router = express.Router();
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const Income = require("../models/income.model.js");
+const Budget = require("../models/budget.model.js");
 const saltRounds = 10
 
 
@@ -130,17 +132,19 @@ router.post("/ingresa",(req,res,next)=>{
 // GET para mostrar vista de la ruta /perfil
 
 router.get('/perfil',(req,res)=>{
-    // console.log("esto estoy mandando a la vista",{
-    //     userInSession: req.session.currentUser
-    // })
-    const id = req.session.currentUser._id
 
-    Users.findById(id)
-    .then((userFound)=>{
-
-        res.render('perfil',{userInSession: userFound})
+    //const income = Income.find()
+    //.then((incomeFound)=>{
+        const id = req.session.currentUser._id
+        Users.findById(id)
+        .then((userFound)=>{
+//console.log("lo que envío a perfil es:",{incomeFound: incomeFound})
+        res.render('perfil',{userInSession: userFound},/*{incomeFound: incomeFound}*/)
     })
-});
+
+    
+    })
+//});
 
 // POST para cerrar sesión
 
@@ -187,6 +191,86 @@ router.post('/perfil/:idUser/editar', uploadCloud.single("fotoPerfil"),(req,res,
     // const profilePicture = URLSearchParams.create({profilePictureUrl})
 })
 
+// RUTA para mostrar la vista crear ingreso
+
+router.get('/crearingreso',(req,res,next)=>{
+
+    res.render("crearingreso",{
+    userInSession: req.session.currentUser
+    })
+})
+
+
+// POST para crear un nuevo ingreso
+
+router.post ('/crearingreso',(req,res,next)=>{
+
+    const {amount, incomeSource, date} = req.body
+
+    Income.create({amount, incomeSource, date})
+    .then(()=>{
+        res.redirect("/ingresos")
+    }).catch((error)=>{
+        next(error)
+    })
+})
+
+// GET para mostrar la vista ingresos
+
+router.get('/ingresos',(req,res,next)=>{
+    Income.find()
+    .then((incomeFound)=>{
+        console.log("esto mando a ingresos", {incomeFound})
+
+        res.render("ingresos",{incomeFound: incomeFound,
+        userInSession:req.session.currentUser})
+    })
+    .catch((error)=>{
+        next(error)
+    })
+})
+
+// RUTA para mostrar la vista crear presupuesto
+
+router.get('/crearpresupuesto',(req,res,next)=>{
+
+    res.render("crearpresupuesto",{
+    userInSession: req.session.currentUser
+    })
+})
+
+// POST para crear una nueva partida
+
+router.post("/crearpresupuesto",(req,res,next)=>{
+
+    const {concept, quantity} = req.body
+
+    Budget.create({concept, quantity})
+
+    .then(()=>{
+        res.redirect("/presupuesto")
+    })
+    .catch((error)=>{
+        next(error)
+    })
+
+})
+
+// GET para mostrar la vista presupuesto
+
+router.get("/presupuesto",(req,res,next)=>{
+
+
+    Budget.find()
+    .then((budgetFound)=>{
+        console.log("esto mando a presupuesto",{budgetFound:budgetFound})
+
+        res.render("presupuesto",{budgetFound: budgetFound})
+    })
+    .catch((error)=>{
+        next(error)
+    })
+})
 
 
 module.exports = router

@@ -12,17 +12,18 @@
 </head>
 <body>
 
-          {{!-- <form id="logout-form" action="/cerrar" method="POST">
-            <button>Cerrar sesión</button>
-          </form> --}}
-
+{{#if userInSession}}
+<img class="float-start img-thumbnail" src={{userInSession.profilePictureUrl}} width="70">
 <ul class="nav justify-content-end">
   <li class="nav-item">
       <form action="/cerrar" method="POST">
-        <button class="btn btn-outline-secondary btn-sm">Cerrar sesión</button>
+        <button class="float-end btn btn-outline-secondary btn-sm">Cerrar sesión</button>
       </form>
   </li>
 </ul>
+{{/if}}
+
+
 
   {{{body}}}
 

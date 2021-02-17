@@ -11,9 +11,9 @@
 </ul>
 
 {{#if userInSession}}
-<img src={{userInSession.profilePictureUrl}} width="70">
+</br>
 <h2>{{userInSession.username}}, este es tu perfil</h2>
-
+{{/if}}
 </br>
 
 <div class="container">
@@ -22,9 +22,13 @@
     <div class="col">
       <p>¿Cómo va tu ciclo</p>
 </br>
-        <form id="logout-form" action="/logout" method="POST">
-            <button  class="btn btn-secondary">Crear Presupuesto</button>
-        </form>
+<a href='/crearingreso' class="btn btn-link">Registra tus ingresos</a>
+<a href='/crearpresupuesto' class="btn btn-link">Crea tu presupuesto</a>
+
+
+{{#each incomeFound}}
+
+{{/each}}
 
     </div>
     <div class="col">
@@ -37,8 +41,3 @@
 
 
 
-
-
-  {{else}}
-  {{!-- <p>Inicia sesión <a href="/">aquí</a></p> --}}
-{{/if}}

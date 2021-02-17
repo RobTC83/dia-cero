@@ -16,6 +16,7 @@ const UserSchema = new Schema ({
             unique: true,
             lowercase: true,
             trim: true
+        
         },
     
         passwordHash:{
@@ -24,6 +25,12 @@ const UserSchema = new Schema ({
         },
         profilePictureUrl : String
     },
+    // income, relacion hacia otra colección,
+        //cada income es un arreglo de ids
+        
+    //
+
+
     {
         timestamps:true
     }

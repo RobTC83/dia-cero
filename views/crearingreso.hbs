@@ -1,0 +1,44 @@
+
+<ul class="nav justify-content-end">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="/crearingreso">Refrescar la página</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/perfil">Regresar</a>
+  </li>
+</ul>
+</br>
+<h1 class="display-6">{{userInSession.username}}, registra tus ingresos</h1>
+
+</br>
+
+<form action="/crearingreso" method="POST">
+        
+<div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">$</span>
+    
+    <input name="amount" type="number" class="form-control" placeholder="¿Cuánto vas a recibir?" aria-label="amount" aria-describedby="basic-addon1">
+</div>
+
+<div class="input-group mb-3">
+  <label class="input-group-text" for="inputGroupSelect01">¿Qué tipo de ingreso es?</label>
+  <select name="incomeSource" class="form-select" id="inputGroupSelect01">
+    <option selected>Elige una opción...</option>
+    <option value="1">Sueldo por mi empleo</option>
+    <option value="2">Ventas hechas</option>
+    <option value="3">Un servicio que presté</option>
+    <option value="4">Otro</option>
+  </select>
+</div>
+
+<div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">Fecha</span>
+    <input 
+        name="date" 
+        type="date"
+        class="form-control" placeholder="¿Cuándo lo recibirás?" aria-label="date" aria-describedby="basic-addon1">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+
+    </form>

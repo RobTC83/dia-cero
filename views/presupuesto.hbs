@@ -1,0 +1,11 @@
+<h1 class="display-6">{{userInSession.username}}, este es tu presupuesto</h1>
+
+</br>
+{{#each budgetFound}}
+
+<p>Partida: {{this.concept}}</p>
+<p>Presupuesto: $ {{this.quantity}}</p>
+<hr>
+
+{{/each}}
+
