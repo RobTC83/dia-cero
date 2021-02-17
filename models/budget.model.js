@@ -1,16 +1,16 @@
-const mongoose = require("mongoose")
-const model = mongoose.model
-const Schema = mongoose.Schema
+// const mongoose = require("mongoose")
+// const model = mongoose.model
+// const Schema = mongoose.Schema
 
-const BudgetSchema = new Schema ({
+// const BudgetSchema = new Schema ({
 
-    
-})
+
+// })
        
       
 
 
 
 
-const Users = model("Users",UserSchema);
-module.exports = Users;
+// const Users = model("Budget",UserSchema);
+// module.exports = Budget;
