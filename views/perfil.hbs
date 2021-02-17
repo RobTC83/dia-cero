@@ -13,13 +13,33 @@
 </ul>
 
 {{#if userInSession}}
+<img src={{userInSession.profilePictureUrl}} width="70">
 <h2>{{userInSession.username}}, este es tu perfil</h2>
 
-{{!-- <div class="d-grid gap-2 col-6">
-    <button type="submit" class="btn btn-secondary btn-sm"" href="/perfil">Refrescar la página</button>
-        <button class="btn btn-secondary btn-sm" type="button">Editar perfil</button>
-    </form>
-</div> --}}
+</br>
+
+<div class="container">
+
+<div class="row align-items-center">
+    <div class="col">
+      <p>¿Cómo va tu ciclo</p>
+</br>
+        <form id="logout-form" action="/logout" method="POST">
+            <button  class="btn btn-secondary">Crear Presupuesto</button>
+        </form>
+
+    </div>
+    <div class="col">
+      <p>Controla tu dinero</p>
+    </div>
+    <div class="col">
+        <p>Planea tu futuro</p>    
+    </div>
+  </div>
+
+
+
+
 
   {{else}}
   {{!-- <p>Inicia sesión <a href="/">aquí</a></p> --}}

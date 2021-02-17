@@ -3,6 +3,8 @@
 const express = require("express");
 const mongoose = require('mongoose');
 const Users = require("../models/user.model.js")
+const uploadCloud = require("../configs/cloudinary.config.js")
+
 const router = express.Router();
 const bcrypt = require("bcrypt")
 const saltRounds = 10
@@ -59,7 +61,7 @@ router.post("/registro",(req,res,next)=>{
         bcrypt.hash(password,salt)
    .then((passwordHash)=>{
        
-       return Users.create({username, email, passwordHash})
+       return Users.create({username, email, passwordHash, profilePictureUrl:"https://res.cloudinary.com/robtc/image/upload/v1613519785/preguntas..._3_ojhsyy.png"})
    })
 
     .then((newUser)=>{
@@ -138,9 +140,19 @@ router.get('/perfil',(req,res)=>{
 
 router.post('/cerrar',(req,res)=>{
     req.session.destroy;
-    console.log("sesión x destruir",req.session.destroy())
+    //console.log("sesión x destruir",req.session.destroy())
     res.redirect('/');
 });
+
+// RUTA para subir las fotos de perfil /editar/subirfoto
+router.post('editar/subirfoto', uploadCloud.single("fotoPerfil"),(req,res,next)=>{
+    const {name} = req.body
+    console.log(req.file)
+    const urlImage = req.file.path
+
+    const profilePicture = URLSearchParams.create({profilePictureUrl})
+})
+
 
 
 module.exports = router

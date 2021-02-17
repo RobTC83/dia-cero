@@ -21,7 +21,8 @@ const UserSchema = new Schema ({
         passwordHash:{
             type: String,
             required: [true,"Introduce tu contraseña"]
-        }
+        },
+        profilePictureUrl : String
     },
     {
         timestamps:true
