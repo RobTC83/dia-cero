@@ -232,6 +232,13 @@ router.post ('/crearingreso',(req,res,next)=>{
 // GET para mostrar la vista ingresos
 
 router.get('/ingresos',(req,res,next)=>{
+
+    IncomeItem.find()
+        .populate('incomeOwner')
+
+    .then((itemsFound)=>{
+        //console.log('items Found',itemsFound)
+    
     IncomeItem.find({incomeOwner:req.session.currentUser._id})
     .then((incomeFound)=>{
         console.log("esto mando a ingresos", {incomeFound})
@@ -240,7 +247,10 @@ router.get('/ingresos',(req,res,next)=>{
         userInSession:req.session.currentUser})
     })
     .catch((error)=>{
+        console.log(`Error while getting the posts from the DB:${error}`)
         next(error)
+    })
+
     })
 })
 
