@@ -1,4 +1,16 @@
-<h1 class="display-6">{{userInSession.username}}, este es tu presupuesto</h1>
+
+<ul class="nav justify-content-end">
+
+  <li class="nav-item">
+    <a class="nav-link" href="/perfil">Regresar</a>
+  </li>
+</ul>
+
+
+{{#if userInSession}}
+</br>
+<h2>{{userInSession.username}}, estas son tus partidas presupuestales</h2>
+{{/if}}
 
 </br>
 {{#each budgetFound}}

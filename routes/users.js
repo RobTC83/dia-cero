@@ -215,9 +215,9 @@ router.post ('/crearingreso',(req,res,next)=>{
 
     IncomeItem.create({incomeOwner: req.session.currentUser._id, incomeAmount, incomeSource, incomeDate})
     .then((itemCreated)=>{
-        console.log("el item created es",itemCreated)
+        //console.log("el item created es",itemCreated)
 
-        return Users.findByIdAndUpdate(req.session.currentUser._id,{$push:{incomeItem: itemCreated.id}})
+        return Users.findByIdAndUpdate(req.session.currentUser._id,{$push:{incomeItem: itemCreated._id}})
     })
     .then(()=>{
         res.redirect('/ingresos')
@@ -236,7 +236,7 @@ router.get('/ingresos',(req,res,next)=>{
     IncomeItem.find()
         .populate('incomeOwner')
 
-    .then((itemsFound)=>{
+    .then(()=>{
         //console.log('items Found',itemsFound)
     
     IncomeItem.find({incomeOwner:req.session.currentUser._id})
@@ -247,7 +247,7 @@ router.get('/ingresos',(req,res,next)=>{
         userInSession:req.session.currentUser})
     })
     .catch((error)=>{
-        console.log(`Error while getting the posts from the DB:${error}`)
+        console.log(`Error while getting the incomeItem from the DB:${error}`)
         next(error)
     })
 
@@ -263,18 +263,25 @@ router.get('/crearpresupuesto',(req,res,next)=>{
     })
 })
 
-// POST para crear una nueva partida
+// POST para crear una nueva partida presupuestal
 
 router.post("/crearpresupuesto",(req,res,next)=>{
 
-    const {budgetConcept, budgetAmount} = req.body
+    const {budgetOwner,budgetConcept, budgetAmount} = req.body
 
-    BudgetItem.create({budgetOwner,budgetConcept, budgetAmount})
+    BudgetItem.create({budgetOwner: req.session.currentUser._id,budgetConcept, budgetAmount})
 
+    .then((budgetCreated)=>{
+
+        return Users.findByIdAndUpdate(req.session.currentUser._id,{$push:{budgetItem: budgetCreated._id}})
+
+    })
+    
     .then(()=>{
         res.redirect("/presupuesto")
     })
     .catch((error)=>{
+        console.log(`Err while creating the budget in DB:${error}`)
         next(error)
     })
 
@@ -283,17 +290,24 @@ router.post("/crearpresupuesto",(req,res,next)=>{
 // GET para mostrar la vista presupuesto
 
 router.get("/presupuesto",(req,res,next)=>{
-
-
     BudgetItem.find()
+        .populate('budgetOwner')
+    
+    .then(()=>{
+
+    BudgetItem.find({budgetOwner:req.session.currentUser._id})
+
     .then((budgetFound)=>{
         console.log("esto mando a presupuesto",{budgetFound:budgetFound})
 
-        res.render("presupuesto",{budgetFound: budgetFound})
+        res.render("presupuesto",{budgetFound: budgetFound,
+        userInSession:req.session.currentUser})
     })
     .catch((error)=>{
+        console.log(`Error while getting the budgetItem from the DB: ${error}`)
         next(error)
     })
+})
 })
 
 
