@@ -310,5 +310,42 @@ router.get("/presupuesto",(req,res,next)=>{
 })
 })
 
+//GET Mostrar la vista "editaringreso"
+
+router.get("/ingresos/:idIncome/editaringreso",(req,res,next)=>{
+
+    const id = req.params.idIncome
+
+    IncomeItem.findById(id)
+    .then((incomeFound)=>{
+        console.log("esto mando a edit:",{incomeFound:incomeFound,
+            currentUser: req.session.currentUser})
+
+        res.render("editarIngreso",{incomeFound:incomeFound,
+        currentUser: req.session.currentUser})
+    })
+    })
+
+
+//POST Guardar los cambios hechos en la vista "editarIngreso"
+
+router.post("/ingresos/:incomeId/editaringreso",(req,res,next)=>{
+    const id = req.params.incomeId
+
+    const {incomeAmount, incomeSource, incomeDate} = req.body
+
+    IncomeItem.findByIdAndUpdate(id,{incomeAmount, incomeSource, incomeDate},{new:true})
+    .then(()=>{
+        console.log("edicion de incomeItem concluida")
+        res.redirect("/ingresos")
+    })
+    .catch((error)=>{
+        console.log("Error when trying to edit income:",error)
+        next(error)
+    })
+
+})
+
+
 
 module.exports = router
