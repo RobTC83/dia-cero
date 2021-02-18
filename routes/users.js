@@ -3,14 +3,14 @@
 const express = require("express");
 const mongoose = require('mongoose');
 const Users = require("../models/user.model.js")
-// const Budget = require("../models/budget.model.js)
+// const BudgetItem = require("../models/budgetItem.model.js)
 
 const uploadCloud = require("../configs/cloudinary.config.js")
 
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const Income = require("../models/income.model.js");
-const Budget = require("../models/budget.model.js");
+const IncomeItem = require("../models/incomeItem.model.js");
+const BudgetItem = require("../models/budgetItem.model.js");
 const saltRounds = 10
 
 
@@ -65,7 +65,14 @@ router.post("/registro",(req,res,next)=>{
         bcrypt.hash(password,salt)
    .then((passwordHash)=>{
        
-       return Users.create({username, email, passwordHash, profilePictureUrl:"https://res.cloudinary.com/robtc/image/upload/v1613519785/preguntas..._3_ojhsyy.png"})
+       return Users.create({
+           username, 
+           email, 
+           passwordHash, 
+           profilePictureUrl:"https://res.cloudinary.com/robtc/image/upload/v1613519785/preguntas..._3_ojhsyy.png",
+           incomeItem:[],
+           budgetItem:[],
+        })
    })
 
     .then((newUser)=>{
@@ -133,7 +140,7 @@ router.post("/ingresa",(req,res,next)=>{
 
 router.get('/perfil',(req,res)=>{
 
-    //const income = Income.find()
+    //const incomeItem = IncomeItem.find()
     //.then((incomeFound)=>{
         const id = req.session.currentUser._id
         Users.findById(id)
@@ -188,7 +195,6 @@ router.post('/perfil/:idUser/editar', uploadCloud.single("fotoPerfil"),(req,res,
     const urlImage = req.file.path
 
     Users.findByIdAndUpdate
-    // const profilePicture = URLSearchParams.create({profilePictureUrl})
 })
 
 // RUTA para mostrar la vista crear ingreso
@@ -205,12 +211,20 @@ router.get('/crearingreso',(req,res,next)=>{
 
 router.post ('/crearingreso',(req,res,next)=>{
 
-    const {amount, incomeSource, date} = req.body
+    const {incomeOwner, incomeAmount, incomeSource, incomeDate} = req.body
 
-    Income.create({amount, incomeSource, date})
+    IncomeItem.create({incomeOwner: req.session.currentUser._id, incomeAmount, incomeSource, incomeDate})
+    .then((itemCreated)=>{
+        console.log("el item created es",itemCreated)
+
+        return Users.findByIdAndUpdate(req.session.currentUser._id,{$push:{incomeItem: itemCreated.id}})
+    })
     .then(()=>{
-        res.redirect("/ingresos")
-    }).catch((error)=>{
+        res.redirect('/ingresos')
+    })
+    
+    .catch((error)=>{
+        console.log(`Err while creating the income in DB:${error}`)
         next(error)
     })
 })
@@ -218,7 +232,7 @@ router.post ('/crearingreso',(req,res,next)=>{
 // GET para mostrar la vista ingresos
 
 router.get('/ingresos',(req,res,next)=>{
-    Income.find()
+    IncomeItem.find({incomeOwner:req.session.currentUser._id})
     .then((incomeFound)=>{
         console.log("esto mando a ingresos", {incomeFound})
 
@@ -243,9 +257,9 @@ router.get('/crearpresupuesto',(req,res,next)=>{
 
 router.post("/crearpresupuesto",(req,res,next)=>{
 
-    const {concept, quantity} = req.body
+    const {budgetConcept, budgetAmount} = req.body
 
-    Budget.create({concept, quantity})
+    BudgetItem.create({budgetOwner,budgetConcept, budgetAmount})
 
     .then(()=>{
         res.redirect("/presupuesto")
@@ -261,7 +275,7 @@ router.post("/crearpresupuesto",(req,res,next)=>{
 router.get("/presupuesto",(req,res,next)=>{
 
 
-    Budget.find()
+    BudgetItem.find()
     .then((budgetFound)=>{
         console.log("esto mando a presupuesto",{budgetFound:budgetFound})
 

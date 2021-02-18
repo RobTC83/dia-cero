@@ -23,7 +23,10 @@ const UserSchema = new Schema ({
             type: String,
             required: [true,"Introduce tu contraseña"]
         },
-        profilePictureUrl : String
+        profilePictureUrl : String,
+        incomeItem: [{ type: Schema.Types.ObjectId, ref: 'IncomeItem' }],
+        budgetItem: [{ type: Schema.Types.ObjectId, ref: 'BudgetItem' }]
+
     },
     // income, relacion hacia otra colección,
         //cada income es un arreglo de ids
