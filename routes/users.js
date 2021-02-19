@@ -409,7 +409,7 @@ router.get('/reportargasto', (req, res,next) => {
       .then(budgetFound => {
           console.log("lo enviado es:",{ 
             budgetFound         })
-        res.render('reportargasto', { 
+        res.render('reportarGasto', { 
             budgetFound,
         currentUser:req.session.currentUser});
       })
