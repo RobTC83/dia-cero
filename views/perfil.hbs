@@ -101,10 +101,17 @@
             <hr>
 
       <a href='/reportargasto' class="btn btn-outline-secondary btn-sm">Registra un gasto</a>
-      {{!-- <a href='/gastos' class="btn btn-link">Ve tus gastos</a> --}}
+      <br><a href='/gastos' class="btn btn-link btn-sm">Ve tus gastos</a>
+      {{#each this.expenseFound}}
+      </br>
+          <p class="form-control">Gastaste: {{this.expenseAmount}}</p>
+          <p>De tu partida: {{this.budgetConcept.budgetConcept}}</p>
+          {{!-- <p>Te quedan: {{100-this.expenseAmount}}</p> --}}
+      {{/each}}
     </div>
   </div>
 </div>
+
 
 
 

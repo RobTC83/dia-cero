@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 
 const expenseSchema = new Schema (
     {
-        budgetConcept: { type: Schema.Types.ObjectId, ref: 'ExpenseItem' },
+        budgetConcept: { type: Schema.Types.ObjectId, ref: 'BudgetItem' },
         expenseAmount: Number,
 
 })

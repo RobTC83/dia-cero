@@ -167,6 +167,7 @@ router.post('/perfil/editar',uploadCloud.single("fotoPerfil"),(req,res)=>{
 
     Users.findByIdAndUpdate(id,{$set:{profilePictureUrl:urlImage}},{new:true})
     .then((userFound)=>{
+        req.session.currentUser = userFound
         console.log(userFound)
         res.redirect("/perfil")
     }
@@ -403,7 +404,6 @@ router.post("/presupuesto/:budgetId/eliminarpresupuesto",(req,res,next)=>{
 
 //GET.  Crear ruta para la vista "reportar gasto"
 
-
 router.get('/reportargasto', (req, res,next) => {
     BudgetItem.find()
       .then(budgetFound => {
@@ -443,15 +443,25 @@ router.post("/reportargasto",(req,res,next)=>{
 
 router.get("/gastos",(req,res,next)=>{
 
-    ExpenseItem.find()
-        //.populate('budgetConcept')
+    // ExpenseItem.find()
+    //     .then((itemsFound)=>{
+    //         // console.log("los items antes del populate",itemsFound)
+    //     })
+         ExpenseItem.find().populate("budgetConcept")
 
         .then((populated)=>{
             console.log("los populated son" ,populated)
         
-            // res.render("gastos",{expenseFound:populated,
-            // userInSession:req.session.currentUser})
-            res.redirect("/perfil")
+            // res.render("perfil",{budgetFound: budgetFound,
+            //     userInSession:req.session.currentUser})
+            // })
+
+             res.render("perfil",{expenseFound:populated,
+             userInSession:req.session.currentUser})
+        })
+        .catch((error)=>{
+            console.log("Err when trying to populate:",error)
+            next(error)
         })
     })
 
