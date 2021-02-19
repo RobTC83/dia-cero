@@ -1,5 +1,16 @@
 
 {{!-- BARRA NAVEGACIÓN --}}
+<!-- Image and text -->
+<nav class="navbar navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img width="30"src="https://res.cloudinary.com/robtc/image/upload/v1613727553/di%CC%81a_cero_1_tyndjj.gif">
+      <img height="40"src="https://res.cloudinary.com/robtc/image/upload/v1613727788/Copia_de_di%CC%81a_cero_temsci.png
+">
+
+    </a>
+  </div>
+</nav>
 
 <ul class="nav justify-content-end">
   <li class="nav-item">
@@ -9,52 +20,96 @@
     <a class="nav-link" href="/perfil/editar">Editar perfil</a>
   </li>
 </ul>
+
 {{!-- SESIÓN DEL USUARIO --}}
 {{#if userInSession}}
 </br>
-<h2>{{userInSession.username}}, este es tu perfil</h2>
+<div class="align-middle">
+<img class="float-start img-thumbnail" src={{userInSession.profilePictureUrl}} width="70">
+<h6>{{userInSession.username}}, este es tu perfil</h6>
+</div>
 {{/if}}
 </br>
 
-{{!-- ORGANIZACIÓN --}}
+{{!-- TUS INGRESOS --}}
+
 <div class="container">
-
-<div class="row align-items-center">
-    <div class="col">
-      <p>¿Cómo va tu ciclo</p>
-</br>
-<a href='/crearingreso' class="btn btn-link">Registra tus ingresos</a>
-<a href='/ingresos' class="btn btn-link">Ve tus ingresos</a>
-
-<a href='/crearpresupuesto' class="btn btn-link">Crea tu presupuesto</a>
-<a href='/presupuesto' class="btn btn-link">Ve tu presupuesto</a>
-
-
-{{#each budgetFound}}
-
-<p>Partida: {{this.budgetConcept}}</p>
-<p>Presupuesto: $ {{this.budgetAmount}}</p>
+  <div class="row">
+    <div class="col-sm">
+      <img class="mx-auto" width="200" href="" src="https://res.cloudinary.com/robtc/image/upload/v1613728541/Copia_de_di%CC%81a_cero_3_s1etwf.png">
 <hr>
+      <img width="100" src="https://res.cloudinary.com/robtc/image/upload/v1613724788/Disen%CC%83o_sin_ti%CC%81tulo_2_vj8lzv.png"/>
+      <hr>
+      <a href='/crearingreso' class="btn btn-outline-secondary btn-sm">Registra tus ingresos</a>
+      <br><a href='/ingresos' class="btn btn-link btn-sm">Ve tus ingresos</a>
+      </br>
+
+{{#each incomeFound}}
+</br>
+{{!-- <p>En {{this.incomeDate}}</p> --}}
+<p class="form-control">Recibirás $ {{this.incomeAmount}}</p>
+<p>de {{this.incomeSource}}</p>
 
 <div class="btn-group">
-   <form action="/presupuesto/{{this._id}}/eliminarpresupuesto" method="POST">
-        <button class="btn btn-primary active">Eliminar</button>
+   <form action="/ingresos/{{this._id}}/eliminaringreso" method="POST">
+        <button class="btn btn-primary active btn-sm">Eliminar</button>
    </form>
-  <a href="presupuesto/{{this._id}}/editarpresupuesto" class="btn btn-primary">Editar</a>
+  <a href="ingresos/{{this._id}}/editaringreso" class="btn btn-primary btn-sm">Editar</a>
 </div>
 
 <hr>
+{{/each}}
+    </div>
 
+    {{!-- TU PRESUPUESTO --}}
+
+    <div class="col-sm">
+      <img class="mx-auto" width="200" href="" src="https://res.cloudinary.com/robtc/image/upload/v1613729000/Copia_de_di%CC%81a_cero_4_cl3zjo.png
+">
+<hr>
+      <img width="100" src="https://res.cloudinary.com/robtc/image/upload/v1613724791/Disen%CC%83o_sin_ti%CC%81tulo_1_e08jyb.png"/>
+      <hr>
+
+      <a href='/crearpresupuesto' class="btn btn-outline-secondary btn-sm">Agrega una partida</a>
+      <br><a href='/presupuesto' class="btn btn-link btn-sm">Ve tu presupuesto</a>
+</br>
+
+      {{#each budgetFound}}
+</br>
+<p class="form-control">Partida: {{this.budgetConcept}}</p>
+<p>Presupuesto: $ {{this.budgetAmount}}</p>
+
+
+<div class="btn-group">
+   <form action="/presupuesto/{{this._id}}/eliminarpresupuesto" method="POST">
+        <button class="btn btn-primary active btn-sm">Eliminar</button>
+   </form>
+  <a href="presupuesto/{{this._id}}/editarpresupuesto" class="btn btn-primary btn-sm">Editar</a>
+</div>
+<hr>
 {{/each}}
 
     </div>
-    <div class="col">
-      <p>Controla tu dinero</p>
-    </div>
-    <div class="col">
-        <p>Planea tu futuro</p>    
+
+  {{!-- TUS GASTOS --}}
+    <div class="col-sm">
+ <img class="mx-auto" width="200" href="" src="https://res.cloudinary.com/robtc/image/upload/v1613729140/Copia_de_di%CC%81a_cero_5_vk5vzh.png
+">
+<hr>
+
+      <img width="100" src="https://res.cloudinary.com/robtc/image/upload/v1613724786/Disen%CC%83o_sin_ti%CC%81tulo_3_vprq0p.png"/>
+            <hr>
+
+      <a href='/reportargasto' class="btn btn-outline-secondary btn-sm">Registra un gasto</a>
+      {{!-- <a href='/gastos' class="btn btn-link">Ve tus gastos</a> --}}
     </div>
   </div>
+</div>
+
+
+
+
+
 
 
 

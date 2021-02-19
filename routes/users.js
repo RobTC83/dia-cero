@@ -230,7 +230,7 @@ router.get('/ingresos',(req,res,next)=>{
     .then((incomeFound)=>{
         console.log("esto mando a ingresos", {incomeFound})
 
-        res.render("ingresos",{incomeFound: incomeFound,
+        res.render("perfil",{incomeFound: incomeFound,
         userInSession:req.session.currentUser})
     })
     .catch((error)=>{

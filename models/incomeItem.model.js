@@ -7,7 +7,7 @@ const incomeSchema = new Schema (
         incomeOwner: { type: Schema.Types.ObjectId, ref: 'Users' },
         incomeAmount: Number,
         incomeSource: String,
-        incomeDate: Date,
+        incomeDate: Date
 })
 
 const IncomeItem = model("IncomeItem", incomeSchema);

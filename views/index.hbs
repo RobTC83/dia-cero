@@ -1,5 +1,14 @@
-<h1 class="display-6">Iniciar sesión</h1>
+<div class="container">
+<img width="250"src="https://res.cloudinary.com/robtc/image/upload/v1613725503/di%CC%81a_cero_ev8jet.gif" class="rounded d-block mx-auto" alt="...">
+</div>
+<div class="container">
 
+    <figure class="text-center">
+  <blockquote class="blockquote">
+    <p>Iniciar sesión</p>
+  </blockquote>
+  
+</figure>
 
 <form action="/ingresa" method="POST">
         
@@ -9,20 +18,17 @@
         </div>
 
 
-        {{!-- <label for="input-email">Correo electrónico: </label>
-        <input type="email" name="email" placeholder="tu correo electrónico"/></br> --}}
-
         <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">***</span>
         <input type="password" name="password" class="form-control" placeholder="tu contraseña" aria-label="Username" aria-describedby="basic-addon1">
         </div>
 
-        {{!-- <label for="input-password">Contraseña: </label>
-        <input type="password" name="password" id="input-password" placeholder="Tu contraseña"/></br> --}}
 
-        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+     
 
-        {{!-- <button type="submit">Iniciar sesión</button> </br> --}}
+<div class="d-grid gap-2 col-6 mx-auto">
+    <button type="submit" class=" btn btn-primary ">Iniciar sesión</button>
+</div>
 
     </form>
 </br>
@@ -33,4 +39,7 @@
     </div>  
     {{/if}}
 
-<p>¿No eres usuario aún? Regístrate <a href="/registro">aquí</a></p>
+<div class="d-grid gap-2 col-6 mx-auto">
+
+<p>¿No eres usuario aún? Regístrate <a href="/registro">aquí</a>
+</div>
