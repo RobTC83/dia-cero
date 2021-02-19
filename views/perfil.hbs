@@ -1,5 +1,5 @@
 
-
+{{!-- BARRA NAVEGACIÓN --}}
 
 <ul class="nav justify-content-end">
   <li class="nav-item">
@@ -9,13 +9,14 @@
     <a class="nav-link" href="/perfil/editar">Editar perfil</a>
   </li>
 </ul>
-
+{{!-- SESIÓN DEL USUARIO --}}
 {{#if userInSession}}
 </br>
 <h2>{{userInSession.username}}, este es tu perfil</h2>
 {{/if}}
 </br>
 
+{{!-- ORGANIZACIÓN --}}
 <div class="container">
 
 <div class="row align-items-center">
@@ -29,7 +30,20 @@
 <a href='/presupuesto' class="btn btn-link">Ve tu presupuesto</a>
 
 
-{{#each incomeFound}}
+{{#each budgetFound}}
+
+<p>Partida: {{this.budgetConcept}}</p>
+<p>Presupuesto: $ {{this.budgetAmount}}</p>
+<hr>
+
+<div class="btn-group">
+   <form action="/presupuesto/{{this._id}}/eliminarpresupuesto" method="POST">
+        <button class="btn btn-primary active">Eliminar</button>
+   </form>
+  <a href="presupuesto/{{this._id}}/editarpresupuesto" class="btn btn-primary">Editar</a>
+</div>
+
+<hr>
 
 {{/each}}
 

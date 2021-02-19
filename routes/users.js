@@ -139,22 +139,6 @@ router.post("/ingresa",(req,res,next)=>{
 
 });
 
-// GET para mostrar vista de la ruta /perfil
-
-router.get('/perfil',(req,res)=>{
-
-    //const incomeItem = IncomeItem.find()
-    //.then((incomeFound)=>{
-        const id = req.session.currentUser._id
-        Users.findById(id)
-        .then((userFound)=>{
-//console.log("lo que envío a perfil es:",{incomeFound: incomeFound})
-        res.render('perfil',{userInSession: userFound},/*{incomeFound: incomeFound}*/)
-    })
-
-    
-    })
-//});
 
 // POST para cerrar sesión
 
@@ -303,7 +287,7 @@ router.get("/presupuesto",(req,res,next)=>{
     .then((budgetFound)=>{
         console.log("esto mando a presupuesto",{budgetFound:budgetFound})
 
-        res.render("presupuesto",{budgetFound: budgetFound,
+        res.render("perfil",{budgetFound: budgetFound,
         userInSession:req.session.currentUser})
     })
     .catch((error)=>{
@@ -447,7 +431,7 @@ router.post("/reportargasto",(req,res,next)=>{
 
     })
     .then(()=>{
-        res.render("gastos")
+        res.redirect("/gastos")
     })
     .catch((error)=>{
         console.log("Err when trying to create the expense report in DB:",error)
@@ -460,16 +444,28 @@ router.post("/reportargasto",(req,res,next)=>{
 router.get("/gastos",(req,res,next)=>{
 
     ExpenseItem.find()
-        .populate("expenseAmount")
-        .then((expenseFound)=>{
-            console.log("Los expenseFounds son:",expenseFound)
+        //.populate('budgetConcept')
 
-
-    res.render("gastos")
+        .then((populated)=>{
+            console.log("los populated son" ,populated)
+        
+            res.render("gastos",{expenseFound:populated,
+            userInSession:req.session.currentUser})
 
         })
+    })
 
 
-        
+// GET para mostrar vista de la ruta /perfil
+
+router.get('/perfil',(req,res)=>{
+
+   
+    res.render('perfil',{
+        userInSession: req.session.currentUser},)
 })
+
+
+
+
 module.exports = router
