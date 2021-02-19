@@ -449,9 +449,9 @@ router.get("/gastos",(req,res,next)=>{
         .then((populated)=>{
             console.log("los populated son" ,populated)
         
-            res.render("gastos",{expenseFound:populated,
-            userInSession:req.session.currentUser})
-
+            // res.render("gastos",{expenseFound:populated,
+            // userInSession:req.session.currentUser})
+            res.redirect("/perfil")
         })
     })
 
