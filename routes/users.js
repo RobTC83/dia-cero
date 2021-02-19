@@ -346,6 +346,20 @@ router.post("/ingresos/:incomeId/editaringreso",(req,res,next)=>{
 
 })
 
+// POST. Borrar incomeItem
+
+router.post("/ingresos/:itemId/ingreso",(req,res,next)=>{
+    const id = req.params.itemId
+
+    IncomeItem.findByIdAndDelete(id)
+    .then((itemDeleted)=>{
+        res.redirect("/ingresos")
+    }).catch((error)=>{
+        console.log("Err trying to delete the incomeItem:",error)
+        next(error)
+    })
+})
+
 
 
 module.exports = router

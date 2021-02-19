@@ -18,9 +18,13 @@
 <p>Recibirás $ {{this.incomeAmount}}</p>
 <p>de {{this.incomeSource}}</p>
 
-  <li class="nav-item">
-    <a class="nav-link" href="ingresos/{{this._id}}/editaringreso">Editar</a>
-  </li>
+
+<div class="btn-group">
+   <form action="/ingresos/{{this._id}}/ingreso" method="POST">
+        <button class="btn btn-primary active">Eliminar</button>
+   </form>
+  <a href="ingresos/{{this._id}}/editaringreso" class="btn btn-primary">Editar</a>
+</div>
 
 <hr>
 
