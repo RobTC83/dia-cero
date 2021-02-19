@@ -1,0 +1,31 @@
+<ul class="nav justify-content-end">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="/editarpresupuesto">Refrescar la página</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/perfil">Regresar</a>
+  </li>
+</ul>
+</br>
+<h1 class="display-6">{{this.currentUser.username}}, edita tu presupuesto</h1>
+
+</br>
+
+<form action="/presupuesto/{{this.budgetFound._id}}/editarpresupuesto" method="POST">
+        
+<div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">Partida</span>
+    
+    <input name="budgetConcept" type="text" class="form-control" placeholder={{this.budgetFound.budgetConcept}}  aria-label="concept" aria-describedby="basic-addon1">
+</div>
+
+<div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">$</span>
+    
+    <input name="budgetAmount" type="number" class="form-control" placeholder={{this.budgetFound.budgetAmount}} aria-label="quantity" aria-describedby="basic-addon1">
+</div>
+
+
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+
+    </form>

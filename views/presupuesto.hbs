@@ -19,5 +19,14 @@
 <p>Presupuesto: $ {{this.budgetAmount}}</p>
 <hr>
 
+<div class="btn-group">
+   <form action="/presupuesto/{{this._id}}/eliminarpresupuesto" method="POST">
+        <button class="btn btn-primary active">Eliminar</button>
+   </form>
+  <a href="presupuesto/{{this._id}}/editarpresupuesto" class="btn btn-primary">Editar</a>
+</div>
+
+<hr>
+
 {{/each}}
 

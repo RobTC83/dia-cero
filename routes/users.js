@@ -348,14 +348,66 @@ router.post("/ingresos/:incomeId/editaringreso",(req,res,next)=>{
 
 // POST. Borrar incomeItem
 
-router.post("/ingresos/:itemId/ingreso",(req,res,next)=>{
+router.post("/ingresos/:itemId/eliminaringreso",(req,res,next)=>{
+    
     const id = req.params.itemId
 
     IncomeItem.findByIdAndDelete(id)
-    .then((itemDeleted)=>{
+    .then(()=>{
         res.redirect("/ingresos")
     }).catch((error)=>{
         console.log("Err trying to delete the incomeItem:",error)
+        next(error)
+    })
+})
+
+//GET Mostrar la vista "editar presupuesto"
+
+router.get("/presupuesto/:idBudget/editarpresupuesto",(req,res,next)=>{
+
+    const id = req.params.idBudget
+
+    BudgetItem.findById(id)
+    .then((budgetFound)=>{
+        res.render("editarPresupuesto",{budgetFound:budgetFound,
+        currentUser:req.session.currentUser})
+    })
+})
+
+
+//POST. Guardar cambios hechos en los presupuestos
+
+router.post("/presupuesto/:budgetId/editarpresupuesto",(req,res,next)=>{
+
+    const id = req.params.budgetId
+
+    const {budgetConcept, budgetAmount} = req.body
+
+    BudgetItem.findByIdAndUpdate(id,{budgetConcept, budgetAmount},{new:true})
+
+    .then(()=>{
+        console.log("Edición de budgetItem exitoso")
+        res.redirect("/presupuesto")
+
+    })
+    .catch((error)=>{
+        console.log("Error trying to edit budgetItem",error)
+        next(error)
+    })
+
+})
+
+// POST. Borrar budgetItem
+
+router.post("/presupuesto/:budgetId/eliminarpresupuesto",(req,res,next)=>{
+    const id = req.params.budgetId
+
+    BudgetItem.findByIdAndDelete(id)
+    .then(()=>{
+        res.redirect("/presupuesto")
+    })
+    .catch((error)=>{
+        console.log("Err trying to delete the budgetItem:",error)
         next(error)
     })
 })
