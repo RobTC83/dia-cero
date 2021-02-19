@@ -11,6 +11,9 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const IncomeItem = require("../models/incomeItem.model.js");
 const BudgetItem = require("../models/budgetItem.model.js");
+const ExpenseItem = require("../models/expenseItem.model.js");
+
+
 const saltRounds = 10
 
 
@@ -349,7 +352,7 @@ router.post("/ingresos/:incomeId/editaringreso",(req,res,next)=>{
 // POST. Borrar incomeItem
 
 router.post("/ingresos/:itemId/eliminaringreso",(req,res,next)=>{
-    
+
     const id = req.params.itemId
 
     IncomeItem.findByIdAndDelete(id)
@@ -414,4 +417,59 @@ router.post("/presupuesto/:budgetId/eliminarpresupuesto",(req,res,next)=>{
 
 
 
+//GET.  Crear ruta para la vista "reportar gasto"
+
+
+router.get('/reportargasto', (req, res,next) => {
+    BudgetItem.find()
+      .then(budgetFound => {
+          console.log("lo enviado es:",{ 
+            budgetFound         })
+        res.render('reportargasto', { 
+            budgetFound,
+        currentUser:req.session.currentUser});
+      })
+      .catch(error => console.log(`Err while displaying expenseReport view: ${error}`));
+  });
+
+// POST. Reportar un gasto
+
+router.post("/reportargasto",(req,res,next)=>{
+
+    const {expenseAmount, budgetConcept} = req.body
+
+    ExpenseItem.create({expenseAmount, budgetConcept})
+    
+    .then((expenseCreated)=>{
+        console.log("el expense created es",expenseCreated)
+
+        return BudgetItem.findByIdAndUpdate(budgetConcept,{$push:{expenseAmount:expenseCreated._id}})
+
+    })
+    .then(()=>{
+        res.render("gastos")
+    })
+    .catch((error)=>{
+        console.log("Err when trying to create the expense report in DB:",error)
+    })
+
+})
+
+//GET. Crear la vista de los gastos
+
+router.get("/gastos",(req,res,next)=>{
+
+    ExpenseItem.find()
+        .populate("expenseAmount")
+        .then((expenseFound)=>{
+            console.log("Los expenseFounds son:",expenseFound)
+
+
+    res.render("gastos")
+
+        })
+
+
+        
+})
 module.exports = router

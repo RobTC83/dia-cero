@@ -1,0 +1,46 @@
+<ul class="nav justify-content-end">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="/creargasto">Refrescar la página</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/perfil">Regresar</a>
+  </li>
+</ul>
+</br>
+<h1 class="display-6">{{this.currentUser.username}}, reporta un gasto</h1>
+
+</br>
+
+<form action="/reportargasto" method="POST">
+
+<div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">$</span>
+    <input name="expenseAmount" type="number" class="form-control" placeholder="¿Cuánto gastaste?" aria-label="quantity" aria-describedby="basic-addon1">
+</div>
+
+<div class="input-group mb-3">
+  <label class="input-group-text" for="inputGroupSelect01">¿De qué partida?</label>
+  <select name="budgetConcept" class="form-select" id="budgetConcept-select">
+    <option disable selected value="">Elige...</option>
+    {{#each budgetFound}}
+      <option value="{{this._id}}">{{this.budgetConcept}}</option>
+    {{/each}}
+  
+  </select>
+</div>
+
+        <button type="submit" class="btn btn-primary">Reportar gasto</button>
+
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+
